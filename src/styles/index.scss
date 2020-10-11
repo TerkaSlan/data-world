@@ -1,0 +1,12 @@
+@import "variables";
+@import "~bootstrap/scss/bootstrap";
+
+@font-face {
+  font-family: "Roboto";
+  src: url(../fonts/Roboto-Regular.ttf);
+}
+
+html {
+  font-size: $font-size;
+  font-family: $font-family;
+}
