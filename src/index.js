@@ -12,6 +12,7 @@ const routes = {
 };
 
 let page = null;
+const base = process.env.base;
 const root = document.querySelector("#root");
 const navLinks = document.querySelectorAll(".nav-link");
 
@@ -19,7 +20,7 @@ const loadContent = () => {
   const { pathname } = window.location;
 
   page?.cleanup();
-  page = routes[pathname] || NotFound;
+  page = routes[pathname.replace(base, "")] || NotFound;
   root.innerHTML = page.render();
   page.effects();
 };
@@ -27,7 +28,8 @@ const loadContent = () => {
 navLinks.forEach((link) => {
   link.addEventListener("click", (e) => {
     e.preventDefault();
-    navigate(link.href);
+    const href = link.getAttribute("href");
+    navigate(base ? `${base}${href}` : href);
   });
 });
 

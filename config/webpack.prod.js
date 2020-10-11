@@ -4,13 +4,14 @@ const common = require("./webpack.common.js");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const TerserJSPlugin = require("terser-webpack-plugin");
 const OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin");
+const webpack = require("webpack");
 
 module.exports = merge(common, {
   mode: "production",
   devtool: false,
   output: {
     path: paths.build,
-    publicPath: "/",
+    publicPath: paths.base,
     filename: "[name].[contenthash].bundle.js",
   },
   plugins: [
@@ -25,6 +26,10 @@ module.exports = merge(common, {
     new MiniCssExtractPlugin({
       filename: "styles/[name].[contenthash].css",
       chunkFilename: "[id].css",
+    }),
+
+    new webpack.DefinePlugin({
+      "process.env.base": JSON.stringify(paths.base),
     }),
   ],
   module: {
